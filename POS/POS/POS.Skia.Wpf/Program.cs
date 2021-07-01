@@ -1,0 +1,4 @@
+﻿
+namespace POS.Skia.Gtk
+{
+}
