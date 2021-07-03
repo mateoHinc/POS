@@ -11,6 +11,7 @@ namespace POS.Helpers
 {
     public class ApiService
     {
+
         public static async Task<Response> LoginAsync(LoginRequest model)
         {
             try
@@ -23,9 +24,12 @@ namespace POS.Helpers
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
 
+                string url = Settings.GetApiUrl();
+
                 HttpClient client = new HttpClient(handler)
                 {
-                    BaseAddress = new Uri("https://localhost:44318/")
+                    BaseAddress = new Uri(url)
+                    //BaseAddress = new Uri("--https://localhost:44318/")
                 };
 
                 HttpResponseMessage response = await client.PostAsync("api/Account/Login", content);

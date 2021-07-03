@@ -30,7 +30,7 @@ namespace POS.Pages
         public LoginPage()
         {
             InitializeComponent();
-            EmailTextBox.Text = "pedro@yopmail.com";
+            EmailTextBox.Text = "pasha@yopmail.com";
             PasswordPasswordBox.Password = "123456";
         }
 

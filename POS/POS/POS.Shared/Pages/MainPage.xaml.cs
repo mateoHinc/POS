@@ -30,7 +30,7 @@ namespace POS.Pages
         {
             base.OnNavigatedTo(e);
             User = (User)e.Parameter;
-            WelcomeTextBlock.Text = $"Bienvenido: {User.FullName}";
+            WelcomeTextBlock.Text = $"Bienvenid@: {User.FullName}";
         }
 
         private async void LogoutImage_Tapped(object sender, TappedRoutedEventArgs e)
