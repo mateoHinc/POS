@@ -31,6 +31,7 @@ namespace POS.Pages
             base.OnNavigatedTo(e);
             User = (User)e.Parameter;
             WelcomeTextBlock.Text = $"Bienvenid@: {User.FullName}";
+            MyFrame.Navigate(typeof(CustomersPage));
         }
 
         private async void LogoutImage_Tapped(object sender, TappedRoutedEventArgs e)
@@ -53,6 +54,16 @@ namespace POS.Pages
             };
 
             return await confirmDialog.ShowAsync();
+        }
+
+        private void CustomersNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(CustomersPage));
+        }
+
+        private void ProductsNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(ProductsPage));
         }
     }
 }
