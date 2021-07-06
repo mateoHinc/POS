@@ -21,5 +21,11 @@ namespace POS.Models
         public bool IsActive { get; set; }
 
         public User User { get; set; }
+
+        public bool WasSaved { get; set; }
+
+        public bool IsEdit { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
     }
 }
