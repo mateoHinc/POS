@@ -211,5 +211,50 @@ namespace POS.Helpers
             }
         }
 
+        public static async Task<Response> DeleteAsync(string controller, int id)
+        {
+            try
+            {
+                HttpClientHandler handler = new HttpClientHandler()
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+
+                string url = Settings.GetApiUrl();
+
+                HttpClient client = new HttpClient(handler)
+                {
+                    BaseAddress = new Uri(url)
+                    //BaseAddress = new Uri("--https://localhost:44318/")
+                };
+
+                HttpResponseMessage response = await client.DeleteAsync($"api/{controller}/{id}");
+                string result = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = result,
+                    };
+                }
+
+                return new Response
+                {
+                    IsSuccess = true
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
     }
 }
