@@ -39,7 +39,7 @@ namespace POS.Pages
         {
             Loader loader = new Loader("Por Favor Espere...");
             loader.Show();
-            Response response = await ApiService.GetListAsync<Product>("products");
+            Response response = await ApiService.GetListAsync<Product>("products", MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)

@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using POS.Api.Data.Entities;
+using POS.Api.Enum;
+using POS.Api.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,40 +12,51 @@ namespace POS.Api.Data
     public class SeeDb
     {
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-        public SeeDb(DataContext context)
+        public SeeDb(DataContext context, IUserHelper userHelper)
         {
             _context = context;
+            _userHelper = userHelper;
         }
 
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
-            await CheckUserAsync();
+            await CheckRolesAsync();
+            await CheckUserAsync("pasha", "pekuns", "pasha@yopmail.com", "310 322 56 66");
+            await CheckUserAsync("toby", "seagar", "toby@yopmail.com", "310 322 56 66");
             await CheckCustomersAsync();
             await CheckProductsAsync();
 
         }
 
-        private async Task CheckUserAsync()
+        private async Task<User> CheckUserAsync(string firstName, string lastName, string email, string phone)
         {
-            if (!_context.Users.Any())
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
             {
-                _context.Users.Add(new User { 
-                    Email = "pasha@yopmail.com", 
-                    FirstName = "Pasha",
-                    LastName = "Pekuns", 
-                    Password = "123456" });
-                
-                _context.Users.Add(new User
+                user = new User
                 {
-                    Email = "toby@yopmail.com",
-                    FirstName = "Toby",
-                    LastName = "Seagar",
-                    Password = "123456"
-                });
-                await _context.SaveChangesAsync();
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = phone,
+                };
+
+                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserToRoleAsync(user, UserType.Admin.ToString());
+                await _userHelper.AddUserToRoleAsync(user, UserType.User.ToString());
             }
+
+            return user;
+        }
+
+        private async Task CheckRolesAsync()
+        {
+            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
+            await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
 
         private async Task CheckCustomersAsync()

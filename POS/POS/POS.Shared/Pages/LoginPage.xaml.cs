@@ -18,13 +18,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace POS.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class LoginPage : Page
     {
         public LoginPage()
@@ -53,20 +49,14 @@ namespace POS.Pages
             MessageDialog messageDialog;
             if (!response.IsSuccess)
             {
-                messageDialog = new MessageDialog(response.Message, "Error");
-                await messageDialog.ShowAsync();
-                return;
-            }
-
-            User user = (User)response.Result;
-            if(user == null)
-            {
                 messageDialog = new MessageDialog("Usuario o contraseña incorrectos", "Error");
                 await messageDialog.ShowAsync();
                 return;
             }
 
-            Frame.Navigate(typeof(MainPage), user);
+            TokenResponse tokenResponse = (TokenResponse)response.Result;
+            
+            Frame.Navigate(typeof(MainPage), tokenResponse);
 
         }
 
