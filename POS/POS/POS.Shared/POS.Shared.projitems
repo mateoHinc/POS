@@ -98,5 +98,6 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\delete.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\edit.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\exit.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\product.png" />
   </ItemGroup>
 </Project>

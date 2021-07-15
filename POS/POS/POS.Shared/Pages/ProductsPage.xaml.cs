@@ -1,4 +1,5 @@
 ﻿using POS.Components;
+using POS.Dialogs;
 using POS.Helpers;
 using POS.Models;
 using System;
@@ -59,6 +60,33 @@ namespace POS.Pages
             ProductsListView.ItemsSource = null;
             ProductsListView.Items.Clear();
             ProductsListView.ItemsSource = Products;
+        }
+
+        private async void AddProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            Product product = new Product();
+            ProductDialog dialog = new ProductDialog(product);
+            await dialog.ShowAsync();
+            if (!product.WasSaved)
+            {
+                return;
+            }
+
+            Loader loader = new Loader("Por favor espere...");
+            loader.Show();
+            Response response = await ApiService.PostAsync("Products", product, MainPage.GetInstance().TokenResponse.Token);
+            loader.Close();
+
+            if (!response.IsSuccess)
+            {
+                MessageDialog messageDialog = new MessageDialog(response.Message, "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            Product newProduct = (Product)response.Result;
+            Products.Add(newProduct);
+            RefreshList();
         }
     }
 }

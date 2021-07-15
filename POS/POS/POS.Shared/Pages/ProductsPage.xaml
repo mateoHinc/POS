@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Text="Productos" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-            <Button Content="Adicionar Producto" HorizontalAlignment="Right" Background="Navy" Foreground="White" Margin="0,-40,0,0"/>
+            <Button Content="Adicionar Producto" HorizontalAlignment="Right" Background="Navy" Foreground="White" Margin="0,-40,0,0" Click="AddProductButton_Click"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
