@@ -91,7 +91,8 @@ namespace POS
         private void SaveParameters()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["ApiUrl"] = "https://posapi.azurewebsites.net";
+            /*localSettings.Values["ApiUrl"] = https://posapi.azurewebsites.net;*/
+            localSettings.Values["ApiUrl"] = "https://localhost:44318";
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
